@@ -1,0 +1,25 @@
+---
+// Placeholder layout — the real shared header (wordmark, social links,
+// Blog link, the alpha.theroadsideemporium.com CTA) is
+// roadside-emporium-site#3, and the "Weathered Wood" re-theme is explicitly
+// deferred past this scaffold (knolocal#298). This exists only so every
+// page has a single place to add that header/footer/analytics once those
+// tickets land, rather than duplicating <head>/<body> boilerplate per page.
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

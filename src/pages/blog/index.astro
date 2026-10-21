@@ -1,0 +1,22 @@
+---
+// Real archive (37 posts) comes from roadside-emporium-site#2's content
+// migration — the live WordPress /blog page was only ever a static
+// "latest 5" block, not a real paginated archive; this one actually is.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Blog | The Roadside Emporium">
+  <h1>Blog</h1>
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
