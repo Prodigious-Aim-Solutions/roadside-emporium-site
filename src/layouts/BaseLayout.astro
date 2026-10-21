@@ -1,26 +1,25 @@
 ---
-// Shared header (roadside-emporium-site#3) — a faithful structural port
-// of the live WordPress site's header, confirmed directly against it:
-// wordmark linking home, Facebook/Instagram icons, a Blog link, and the
-// "Click Here To Start Using..." CTA — pointed at beta.theroadsideemporium.com
-// per explicit direction, not the alpha.theroadsideemporium.com the live
-// WordPress site's own header still links to.
-// Deliberately NOT porting the original theme's CSS (`wp-content/themes/
-// roadsideemporium/style.css`) — knolocal#298 is explicit this migration
-// defers the "Weathered Wood" re-theme, and porting the old theme's look
-// now would just be throwaway work once that lands. Original class names
-// (social-links, top-section) are kept on the markup anyway so a future
-// styling pass has something to hook into, same reasoning already applied
-// to the ported page content in #2.
+// Shared header (roadside-emporium-site#3) — structural port of the live
+// WordPress site's header: wordmark linking home, Facebook/Instagram
+// icons, a Blog link, and the "Click Here To Start Using..." CTA —
+// pointed at beta.theroadsideemporium.com per explicit direction, not the
+// alpha.theroadsideemporium.com the live WordPress site's own header
+// still links to.
+//
+// Themed to match the app's "Weathered Wood" brand (roadside-emporium-
+// site#9, see src/styles/global.css) — not the old WordPress theme's own
+// CSS (`wp-content/themes/roadsideemporium/style.css`), which was never
+// ported and never will be now that #9 has landed.
 //
 // The dead Mailchimp signup embed from the live site is NOT ported —
 // it was already commented out/non-functional there (confirmed directly),
 // so porting it would just be copying dead code. No footer either — the
 // live site genuinely has none (also confirmed directly, see knolocal#298).
 //
-// Font Awesome *is* included, even though this is otherwise a
-// no-new-styling layout — without it the <i class="fab fa-*"> icons
-// render as nothing at all, which is a functional gap, not a cosmetic one.
+// Font Awesome is included for the Facebook/Instagram <i class="fab
+// fa-*"> icons — without it they render as nothing at all.
+import '../styles/global.css';
+
 interface Props {
   title: string;
 }

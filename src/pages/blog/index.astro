@@ -11,17 +11,19 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <BaseLayout title="Blog | The Roadside Emporium">
-  <h1>Blog</h1>
-  <ul>
-    {posts.map((post) => (
-      <li>
-        {/* roadside-emporium-site#5 — BASE_URL is '/' in production,
-            '/roadside-emporium-site/' on GH Pages staging; internal links
-            have to be prefixed with it explicitly, since Astro's `base`
-            config only rewrites asset URLs it generates itself, never a
-            raw string href written by hand. */}
-        <a href={`${import.meta.env.BASE_URL}blog/${post.id}/`}>{post.data.title}</a>
-      </li>
-    ))}
-  </ul>
+  <div class="page-content">
+    <h1>Blog</h1>
+    <ul class="blog-index-list">
+      {posts.map((post) => (
+        <li>
+          {/* roadside-emporium-site#5 — BASE_URL is '/' in production,
+              '/roadside-emporium-site/' on GH Pages staging; internal links
+              have to be prefixed with it explicitly, since Astro's `base`
+              config only rewrites asset URLs it generates itself, never a
+              raw string href written by hand. */}
+          <a href={`${import.meta.env.BASE_URL}blog/${post.id}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </BaseLayout>

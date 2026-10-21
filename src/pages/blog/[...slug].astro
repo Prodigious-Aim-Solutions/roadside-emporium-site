@@ -15,8 +15,10 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={`${post.data.title} | The Roadside Emporium`}>
-  <article>
-    <h1>{post.data.title}</h1>
-    <Content />
-  </article>
+  <div class="page-content">
+    <article class="post-content">
+      <h1>{post.data.title}</h1>
+      <Content />
+    </article>
+  </div>
 </BaseLayout>
