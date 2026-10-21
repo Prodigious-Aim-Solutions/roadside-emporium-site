@@ -18,7 +18,18 @@
 //
 // Font Awesome is included for the Facebook/Instagram <i class="fab
 // fa-*"> icons — without it they render as nothing at all.
+//
+// Google Analytics (roadside-emporium-site#4) — ported verbatim from the
+// live WordPress site's own gtag snippet, same G-PWL36J9WDS property, so
+// historical data stays in one property across the cutover rather than
+// fragmenting into a second one. Loads unconditionally on every
+// environment (including local dev and GH Pages staging), matching how
+// the live site itself has always loaded it — #4's own acceptance
+// criteria is confirming it fires on staging before the production
+// cutover, not gating it by environment.
 import '../styles/global.css';
+
+const GA_MEASUREMENT_ID = 'G-PWL36J9WDS';
 
 interface Props {
   title: string;
@@ -40,6 +51,16 @@ const base = import.meta.env.BASE_URL;
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID);
+    </script>
   </head>
   <body>
     <div class="social-links">
