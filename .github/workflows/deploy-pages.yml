@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages (staging)
+
+# roadside-emporium-site#5 — staging/review target, same pattern as
+# knolocal-docs. Production (the real theroadsideemporium.com domain)
+# is a separate workflow on a v* tag, once #6 lands.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build (GH Pages base path)
+        run: npm run build
+        env:
+          DEPLOY_TARGET: gh-pages
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

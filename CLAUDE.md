@@ -6,7 +6,7 @@ The marketing/landing/blog site for **The Roadside Emporium**, migrating off a s
 
 ## Stack
 
-- **Framework:** [Astro](https://astro.build/) 5, TypeScript (strict, `astro/tsconfigs/strict`)
+- **Framework:** [Astro](https://astro.build/) 7, TypeScript (strict, `astro/tsconfigs/strict`)
 - **Content:** a single `blog` content collection (`src/content.config.ts`, Markdown files under `src/content/blog/`) — schema is deliberately minimal (`title`, `date`) since that's all the source WordPress data actually has (no tags, no featured images, no custom fields; confirmed in `knolocal#298`'s audit)
 - **Lint:** ESLint flat config (`eslint.config.js`) with `eslint-plugin-astro`
 
@@ -34,13 +34,13 @@ src/
 
 ## Key Patterns
 
-**This is a scaffold-first repo** (roadside-emporium-site#1): pages exist with placeholder copy, and one sample post (`hello-world.md`) exists purely to exercise the content collection end-to-end. Real content (#2), the real shared header (#3), analytics (#4), and deploy wiring (#5/#6) are all separate, not-yet-landed tickets — don't assume any of those are done just because the page/route exists.
+**This is a scaffold-first repo** (roadside-emporium-site#1): pages exist with placeholder copy, and one sample post (`hello-world.md`) exists purely to exercise the content collection end-to-end. Real content (#2), the real shared header (#3), and analytics (#4) are all separate, not-yet-landed tickets — don't assume any of those are done just because the page/route exists. GH Pages staging (#5) is wired up, live at https://prodigious-aim-solutions.github.io/roadside-emporium-site/; S3 production (#6) isn't yet.
 
 **Deliberately not re-themed yet.** `knolocal#298` is explicit that this migration is a faithful like-for-like port of the current WordPress site, not a "Weathered Wood" rebrand (the app's theme, `knolocal/src/theme.ts`) — that's separate future work, scoped once the port itself is live and stable. Don't add brand colors/fonts here ahead of that decision.
 
 **No footer exists on the current live site at all** — confirmed directly during the `knolocal#298` audit (no legal links, no copyright line, nothing). Don't invent one as part of a "faithful port" ticket; adding a footer (and whether it should link to `knolocal-docs`' legal pages) is explicitly flagged in `knolocal#298` as a net-new decision, not part of the migration itself.
 
-**`astro.config.mjs`'s `site`/`base`** are currently set for the eventual production custom domain (`https://theroadsideemporium.com`, `base: '/'`). GitHub Pages staging (roadside-emporium-site#5) needs `base: '/roadside-emporium-site/'` instead — that ticket will need to either branch the config per deploy target or override it at build time; not yet decided which.
+**`astro.config.mjs`'s `site`/`base` branch on a `DEPLOY_TARGET` env var** (roadside-emporium-site#5): unset (local dev, and the eventual production build) gets the real custom domain (`https://theroadsideemporium.com`, `base: '/'`); `DEPLOY_TARGET=gh-pages` (set only by `.github/workflows/deploy-pages.yml`'s build step) gets the GH Pages subpath shape (`https://prodigious-aim-solutions.github.io`, `base: '/roadside-emporium-site/'`). The trailing slash on that `base` value matters — `import.meta.env.BASE_URL` doesn't normalize one in, so any hand-written internal link has to be built as `` `${import.meta.env.BASE_URL}blog/...` `` (see `src/pages/blog/index.astro`) and a `base` without the trailing slash produces a concatenation bug (confirmed directly: built as `/roadside-emporium-siteblog/...`, missing the `/`). Astro's own `base` config only ever rewrites asset URLs *it* generates — never a plain string href written by hand — so every future hand-written internal link (the header nav in #3, especially) needs this same `BASE_URL`-prefix treatment, not a hardcoded absolute path.
 
 **Content collection schema is intentionally not padded ahead of need** — no `tags`, `category`, `image`, or `excerpt` fields, because the source data has none of those (single "Uncategorized" category across all 37 posts, no tags, zero images confirmed via the WordPress REST API). If a later ticket needs one of these, add it then rather than speculatively now.
 
@@ -59,6 +59,11 @@ npm run lint        # ESLint
 
 ---
 
+## Deploy
+
+- **Staging** — GitHub Pages, live at https://prodigious-aim-solutions.github.io/roadside-emporium-site/. `.github/workflows/deploy-pages.yml` typechecks, lints, builds (with `DEPLOY_TARGET=gh-pages`), and publishes to the `gh-pages` branch via `peaceiris/actions-gh-pages` on every push to `main`. This repo must stay public for GH Pages to work without a paid plan — not a practical concern here, since it's the public marketing site anyway.
+- **Production** — not yet wired (roadside-emporium-site#6) — S3, mirroring `knolocal`/`knolocal-docs`'s own `scripts/deploy.mjs` pattern, on `v*` tags.
+
 ## After Making Changes
 
-Run `npm run typecheck` and `npm run lint` before committing — no CI is wired up yet (roadside-emporium-site#5/#6), so these are the only gate until then.
+Run `npm run typecheck` and `npm run lint` before committing. There's no PR-gating CI yet — `deploy-pages.yml` runs those same checks on push to `main`, which catches a break only after it's already merged, not before — so running them locally first is the only thing stopping that right now.

@@ -6,9 +6,11 @@ The marketing/landing/blog site for **The Roadside Emporium**, migrating off Wor
 
 Scaffolding only ([roadside-emporium-site#1](https://github.com/Prodigious-Aim-Solutions/roadside-emporium-site/issues/1)) — placeholder pages and a single sample blog post. Real content lands in [#2](https://github.com/Prodigious-Aim-Solutions/roadside-emporium-site/issues/2), the real header in [#3](https://github.com/Prodigious-Aim-Solutions/roadside-emporium-site/issues/3).
 
+Staging deploy is live: https://prodigious-aim-solutions.github.io/roadside-emporium-site/
+
 ## Stack
 
-- [Astro](https://astro.build/) 5, TypeScript (strict)
+- [Astro](https://astro.build/) 7, TypeScript (strict)
 - Content collections for the blog
 
 ## Dev Commands
