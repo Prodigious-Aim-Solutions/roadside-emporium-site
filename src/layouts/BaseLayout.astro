@@ -22,14 +22,18 @@
 // Google Analytics (roadside-emporium-site#4) — ported verbatim from the
 // live WordPress site's own gtag snippet, same G-PWL36J9WDS property, so
 // historical data stays in one property across the cutover rather than
-// fragmenting into a second one. Loads unconditionally on every
-// environment (including local dev and GH Pages staging), matching how
-// the live site itself has always loaded it — #4's own acceptance
-// criteria is confirming it fires on staging before the production
-// cutover, not gating it by environment.
+// fragmenting into a second one. Gated to production only (excludes local
+// dev and GH Pages staging) so dev/staging traffic doesn't pollute real
+// analytics — staging verification of the snippet itself was dropped in
+// favor of this gating. import.meta.env.PROD alone excludes `astro dev`
+// but not `astro preview`/a local production build (both set PROD=true
+// with DEPLOY_TARGET unset) — same "no env var = production shape"
+// ambiguity astro.config.mjs's own DEPLOY_TARGET branching already has,
+// not a new one invented here.
 import '../styles/global.css';
 
 const GA_MEASUREMENT_ID = 'G-PWL36J9WDS';
+const isProdAnalytics = import.meta.env.PROD && process.env.DEPLOY_TARGET !== 'gh-pages';
 
 interface Props {
   title: string;
@@ -51,16 +55,20 @@ const base = import.meta.env.BASE_URL;
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-    <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_MEASUREMENT_ID);
-    </script>
+    {isProdAnalytics && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            window.dataLayer.push(arguments);
+          }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_MEASUREMENT_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <div class="social-links">
