@@ -1,15 +1,32 @@
 ---
-// Placeholder layout — the real shared header (wordmark, social links,
-// Blog link, the alpha.theroadsideemporium.com CTA) is
-// roadside-emporium-site#3, and the "Weathered Wood" re-theme is explicitly
-// deferred past this scaffold (knolocal#298). This exists only so every
-// page has a single place to add that header/footer/analytics once those
-// tickets land, rather than duplicating <head>/<body> boilerplate per page.
+// Shared header (roadside-emporium-site#3) — a faithful structural port
+// of the live WordPress site's header, confirmed directly against it:
+// wordmark linking home, Facebook/Instagram icons, a Blog link, and the
+// "Click Here To Start Using..." CTA — pointed at beta.theroadsideemporium.com
+// per explicit direction, not the alpha.theroadsideemporium.com the live
+// WordPress site's own header still links to.
+// Deliberately NOT porting the original theme's CSS (`wp-content/themes/
+// roadsideemporium/style.css`) — knolocal#298 is explicit this migration
+// defers the "Weathered Wood" re-theme, and porting the old theme's look
+// now would just be throwaway work once that lands. Original class names
+// (social-links, top-section) are kept on the markup anyway so a future
+// styling pass has something to hook into, same reasoning already applied
+// to the ported page content in #2.
+//
+// The dead Mailchimp signup embed from the live site is NOT ported —
+// it was already commented out/non-functional there (confirmed directly),
+// so porting it would just be copying dead code. No footer either — the
+// live site genuinely has none (also confirmed directly, see knolocal#298).
+//
+// Font Awesome *is* included, even though this is otherwise a
+// no-new-styling layout — without it the <i class="fab fa-*"> icons
+// render as nothing at all, which is a functional gap, not a cosmetic one.
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -18,8 +35,23 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
+    <div class="social-links">
+      <a href="https://www.facebook.com/theroadsideemporium"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/theroadsideemporium"><i class="fab fa-instagram"></i></a>
+      <a href={`${base}blog`}>Blog</a>
+    </div>
+    <div class="top-section">
+      <h1><a href={base}>The Roadside Emporium</a></h1>
+      <h2><a href="https://beta.theroadsideemporium.com/">Click Here To Start Using The Roadside Emporium Today!</a></h2>
+    </div>
     <slot />
   </body>
 </html>
