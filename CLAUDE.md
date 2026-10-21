@@ -34,7 +34,11 @@ src/
 
 ## Key Patterns
 
-**This is a scaffold-first repo** (roadside-emporium-site#1): pages exist with placeholder copy, and one sample post (`hello-world.md`) exists purely to exercise the content collection end-to-end. Real content (#2), the real shared header (#3), and analytics (#4) are all separate, not-yet-landed tickets — don't assume any of those are done just because the page/route exists. GH Pages staging (#5) is wired up, live at https://prodigious-aim-solutions.github.io/roadside-emporium-site/; S3 production (#6) isn't yet.
+**Real content has landed** (roadside-emporium-site#2): all 37 published WordPress posts and the 4 published pages' copy are in. The real shared header (#3) and analytics (#4) are still separate, not-yet-landed tickets. GH Pages staging (#5) is wired up, live at https://prodigious-aim-solutions.github.io/roadside-emporium-site/; S3 production (#6) isn't yet.
+
+**Content migration is a one-time script, not a recurring sync** (`scripts/migrate-wp-content.mjs`, run once against a WXR export): `npm run migrate:wp -- --input <path-to-export.xml>`. Parses the export with `fast-xml-parser`, converts each published post's `content:encoded` HTML to Markdown with `node-html-markdown`, and writes `src/content/blog/<wp:post_name>.md` — the WordPress slug is kept exactly as the filename, so every post's URL carries over unchanged from the live site. Pages go to a gitignored scratch dir (`scripts/.wp-export-pages/`) for manual review before folding into `src/pages/*.astro` by hand, since that's page layout worth eyeballing, not prose to pipe straight through. **Never commit the raw WXR export itself** — it contains the site owner's real email address (`wp:author_email`) in cleartext, and this repo is public. The export the migration actually ran against had 13 draft posts and 1 draft page that were never live; the script skips drafts by default (`--include-drafts` opts in) since this ticket's job is a faithful port of what was *published*, not everything that ever existed in the WordPress install — whether to do anything with those drafts (there's real, finished-looking content in several of them) is an open question for whoever wants to revisit it, not decided here.
+
+**WordPress's `wpautop()` auto-wraps bare paragraph text in `<p>` tags at render time** for content stored without explicit Gutenberg block markers (the `/`, `/vendors`, `/users` pages use this older "classic" content shape; the 37 blog posts all use real `<!-- wp:paragraph -->` blocks and don't have this problem). The raw `content:encoded` for those 3 pages has bare text nodes, not literal `<p>` elements — `src/pages/index.astro`/`vendors.astro`/`users.astro` add the `<p>` tags back by hand to match what the live site actually rendered, not what the export literally stores.
 
 **Deliberately not re-themed yet.** `knolocal#298` is explicit that this migration is a faithful like-for-like port of the current WordPress site, not a "Weathered Wood" rebrand (the app's theme, `knolocal/src/theme.ts`) — that's separate future work, scoped once the port itself is live and stable. Don't add brand colors/fonts here ahead of that decision.
 
@@ -55,6 +59,7 @@ npm run build      # astro check + astro build
 npm run preview    # preview the production build locally
 npm run typecheck  # astro check
 npm run lint        # ESLint
+npm run migrate:wp -- --input <path-to-wxr-export.xml>  # one-time WP content migration (#2) — see Key Patterns
 ```
 
 ---
