@@ -1,0 +1,53 @@
+name: Deploy to S3 (production)
+
+# roadside-emporium-site#6 — triggers on a v* tag, builds with no
+# DEPLOY_TARGET set (astro.config.mjs's production shape: the real
+# theroadsideemporium.com domain, base '/'), and deploys to the production
+# S3 bucket sitting behind CloudFront. Staging stays on deploy-pages.yml
+# (push to main, GH Pages) — this repo has no S3 staging bucket, unlike
+# knolocal's own deploy.yml.
+#
+# AWS_KNO_ACCESS_KEY_ID/AWS_KNO_SECRET_ACCESS_KEY are knolocal's own IAM
+# credentials, reused here by explicit choice rather than minting a
+# dedicated IAM user for this repo. S3_BUCKET is a repository *variable*
+# (Settings → Secrets and variables → Actions → Variables), not a secret —
+# the bucket name isn't sensitive, and keeping it there (rather than
+# hardcoded here, unlike knolocal's own deploy.yml) lets it be set/changed
+# without a code change, which matters since the bucket doesn't exist yet
+# as of this workflow landing.
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy to production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build (production)
+        run: npm run build
+
+      - name: Deploy to S3
+        run: npm run deploy
+        env:
+          AWS_KNO_ACCESS_KEY_ID: ${{ secrets.AWS_KNO_ACCESS_KEY_ID }}
+          AWS_KNO_SECRET_ACCESS_KEY: ${{ secrets.AWS_KNO_SECRET_ACCESS_KEY }}
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
