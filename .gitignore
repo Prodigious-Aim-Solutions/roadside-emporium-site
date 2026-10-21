@@ -14,3 +14,11 @@ npm-debug.log*
 
 # macOS
 .DS_Store
+
+# roadside-emporium-site#2 — scripts/migrate-wp-content.mjs's intermediate
+# output for the 4 pages (reviewed and folded into src/pages/*.astro by
+# hand, never committed as-is) plus any copy of the source WXR export
+# itself, which contains the site owner's real email address
+# (wp:author_email) and must never land in this public repo.
+scripts/.wp-export-pages/
+scripts/*.xml

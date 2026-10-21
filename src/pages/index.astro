@@ -1,10 +1,58 @@
 ---
-// Real copy ("For Roadside Stand Vendors" / "For App Users" benefits
-// sections) comes from roadside-emporium-site#2's content migration.
+// Content migrated from WordPress (roadside-emporium-site#2) — faithful
+// port of the live page's two-column benefits section. <p> tags around
+// each benefit-item's text are added back here on purpose: the raw WP
+// export stores this as bare text with blank lines, not real <p>
+// elements — WordPress's wpautop() auto-wraps it at render time, so the
+// live page (and this port, to match it) really does have <p> there.
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// roadside-emporium-site#5 — internal hrefs need the BASE_URL prefix on
+// GH Pages staging (base: '/roadside-emporium-site/'); see that ticket's
+// note in CLAUDE.md for why Astro's own `base` config can't do this for
+// a hand-written href.
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="The Roadside Emporium">
-  <h1>The Roadside Emporium</h1>
-  <p>Home page — content pending roadside-emporium-site#2.</p>
+  <div class="benefits-section">
+    <div>
+      <h2><a href={`${base}vendors`}>For Roadside Stand Vendors</a></h2>
+      <div class="benefit-item">
+        <h3>Showcase Your Products</h3>
+        <p>Reach a larger customer base and display your unique offerings to potential buyers.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Boost Sales</h3>
+        <p>Attract more customers to your roadside stand and increase your sales revenue.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Online Visibility</h3>
+        <p>Get your roadside stand noticed by a wider audience and increase your online presence.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Connect with Customers</h3>
+        <p>Engage directly with your customers, build relationships, and receive valuable feedback.</p>
+      </div>
+    </div>
+    <div>
+      <h2><a href={`${base}users`}>For App Users</a></h2>
+      <div class="benefit-item">
+        <h3>Discover Unique Roadside Stands</h3>
+        <p>Explore a variety of roadside stands and find hidden gems near you.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Support Local Vendors</h3>
+        <p>Contribute to the local economy and support small businesses in your community.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Find Fresh and Handmade Products</h3>
+        <p>Discover fresh produce, handmade crafts, and unique items directly from the source.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>Plan Your Roadside Adventures</h3>
+        <p>Plan your next roadside adventure with ease and never miss out on the best roadside stands.</p>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
