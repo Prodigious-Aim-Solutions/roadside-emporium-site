@@ -15,7 +15,7 @@ When you shop at local businesses, the money you spend is more likely to be rein
 
 Supporting local markets encourages entrepreneurship and innovation. Small business owners are often more willing to take risks and introduce unique products and services, contributing to a diverse and dynamic local economy.
 
-#### [Environmental Benefits: Sustainable Shopping](https://theroadsideemporium.com/eco-friendly-shopping-how-local-markets-help-the-environment/)
+#### [Environmental Benefits: Sustainable Shopping](https://theroadsideemporium.com/blog/eco-friendly-shopping-how-local-markets-help-the-environment/)
 
 Shopping local is not only good for the economy but also for the environment. By choosing to buy from local vendors, you can reduce your carbon footprint and contribute to a more sustainable future.
 

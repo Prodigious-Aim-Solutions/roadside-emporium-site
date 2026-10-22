@@ -3,7 +3,7 @@ title: "Beyond the Stand - Collaborative Opportunities"
 date: 2023-11-16
 ---
 
-Your roadside stand doesn't exist in isolation; it's part of a larger ecosystem. This chapter explores the myriad [collaborative opportunities](https://theroadsideemporium.com/collaborate-with-nearby-businesses-a-recipe-for-success/) that extend beyond your stand, presenting innovative ways to connect with the community and fellow businesses.
+Your roadside stand doesn't exist in isolation; it's part of a larger ecosystem. This chapter explores the myriad [collaborative opportunities](https://theroadsideemporium.com/blog/collaborate-with-nearby-businesses-a-recipe-for-success/) that extend beyond your stand, presenting innovative ways to connect with the community and fellow businesses.
 
 ### **Section 1: Partnering with Local Businesses**
 
@@ -47,7 +47,7 @@ If your stand operates in an area with multiple farmers' markets, consider estab
 
 ### **Section 5: Educational Workshops and Demos**
 
-Position your stand as a source of knowledge and expertise by hosting [educational workshops or demonstrations](https://theroadsideemporium.com/host-workshops-or-demos-building-connections-and-expertise/). This not only engages customers but also positions your brand as an authority in your niche. Consider topics like cooking demonstrations, nutritional talks, or DIY workshops.
+Position your stand as a source of knowledge and expertise by hosting [educational workshops or demonstrations](https://theroadsideemporium.com/blog/host-workshops-or-demos-building-connections-and-expertise/). This not only engages customers but also positions your brand as an authority in your niche. Consider topics like cooking demonstrations, nutritional talks, or DIY workshops.
 
 **Action Points:**
 

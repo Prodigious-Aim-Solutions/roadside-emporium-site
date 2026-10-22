@@ -3,7 +3,7 @@ title: "Mastering Local SEO: A Roadmap for Small Businesses"
 date: 2023-09-29
 ---
 
-**[Click here for our farm stand specific followup on local SEO.](https://theroadsideemporium.com/boosting-farm-stand-visibility-a-guide-to-local-seo-success/)**
+**[Click here for our farm stand specific followup on local SEO.](https://theroadsideemporium.com/blog/boosting-farm-stand-visibility-a-guide-to-local-seo-success/)**
 
 In today's digital age, having a strong online presence is crucial for small businesses. Local search engine optimization (SEO) is the key to ensuring that your business gets noticed by potential customers in your area. In this article, we'll explore the world of local SEO optimization and provide you with a roadmap for success.
 
@@ -49,4 +49,4 @@ Now that you understand the importance of local SEO, let's dive into a roadmap t
 
 By following this roadmap, you'll be well on your way to mastering local SEO and attracting more local customers to your small business. Remember, local SEO is an ongoing effort, so stay committed to the process, and you'll reap the rewards of increased visibility and growth.
 
-[More Creative Marketing Ideas for Your Roadside Stand](https://theroadsideemporium.com/creative-marketing-ideas-for-your-roadside-stand-beyond-the-roadside-emporium/)
+[More Creative Marketing Ideas for Your Roadside Stand](https://theroadsideemporium.com/blog/creative-marketing-ideas-for-your-roadside-stand-beyond-the-roadside-emporium/)
